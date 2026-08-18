@@ -1,4 +1,6 @@
 use std::fmt;
+
+#[derive(Debug, Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
@@ -58,6 +60,38 @@ impl fmt::Display for TokenType {
             TokenType::Semicolon => write!(f, "Semicolon"),
 
             TokenType::EndOfFile => write!(f, "EndOfFile"),
+        }
+    }
+}
+impl TokenType {
+    pub fn from_str(s: &str) -> Option<TokenType> {
+        match s {
+            "Identifier" => Some(TokenType::Identifier),
+            "Number" => Some(TokenType::Number),
+
+            "Equals" => Some(TokenType::Equals),
+            "Plus" => Some(TokenType::Plus),
+            "Minus" => Some(TokenType::Minus),
+            "Asterisk" => Some(TokenType::Asterisk),
+            "Slash" => Some(TokenType::Slash),
+
+            "LeftBracket" => Some(TokenType::LeftBracket),
+            "RightBracket" => Some(TokenType::RightBracket),
+
+            "LeftSquiggly" => Some(TokenType::LeftSquiggly),
+            "RightSquiggly" => Some(TokenType::RightSquiggly),
+
+            "LetTok" => Some(TokenType::LetTok),
+            "IfTok" => Some(TokenType::IfTok),
+            "ElseTok" => Some(TokenType::ElseTok),
+            "ForTok" => Some(TokenType::ForTok),
+            "WhileTok" => Some(TokenType::WhileTok),
+
+            "Semicolon" => Some(TokenType::Semicolon),
+
+            "EndOfFile" => Some(TokenType::EndOfFile),
+
+            _ => None,
         }
     }
 }
