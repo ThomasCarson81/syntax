@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{self, write};
 
 #[derive(Debug, Clone)]
 pub struct Token {
@@ -18,6 +18,12 @@ pub enum TokenType {
     Minus,
     Asterisk,
     Slash,
+
+    // Shorthand Binary Operators
+    PlusEquals,
+    MinusEquals,
+    AsteriskEquals,
+    SlashEquals,
 
     // Comparison Operators
     GreaterThan,
@@ -63,6 +69,11 @@ impl fmt::Display for TokenType {
             TokenType::Asterisk => write!(f, "Asterisk"),
             TokenType::Slash => write!(f, "Slash"),
 
+            TokenType::PlusEquals => write!(f, "PlusEquals"),
+            TokenType::MinusEquals => write!(f, "MinusEquals"),
+            TokenType::AsteriskEquals => write!(f, "AsteriskEquals"),
+            TokenType::SlashEquals => write!(f, "SlashEquals"),
+
             TokenType::GreaterThan => write!(f, "GreaterThan"),
             TokenType::LessThan => write!(f, "LessThan"),
             TokenType::GreaterThanOrEqualTo => write!(f, "GreaterThanOrEqualTo"),
@@ -103,6 +114,11 @@ impl TokenType {
             "Minus" => Some(TokenType::Minus),
             "Asterisk" => Some(TokenType::Asterisk),
             "Slash" => Some(TokenType::Slash),
+
+            "PlusEquals" => Some(TokenType::PlusEquals),
+            "MinusEquals" => Some(TokenType::MinusEquals),
+            "AsteriskEquals" => Some(TokenType::AsteriskEquals),
+            "SlashEquals" => Some(TokenType::SlashEquals),
 
             "GreaterThan" => Some(TokenType::GreaterThan),
             "LessThan" => Some(TokenType::LessThan),
