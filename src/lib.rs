@@ -8,32 +8,47 @@ pub struct Token {
 }
 #[derive(PartialEq, Debug, Clone, Copy)]
 pub enum TokenType {
+    // Values
     Identifier,
     Number,
 
+    // Binary Operators
     Equals,
     Plus,
     Minus,
     Asterisk,
     Slash,
 
+    // Comparison Operators
     GreaterThan,
     LessThan,
+    GreaterThanOrEqualTo,
+    LessThanOrEqualTo,
+    EqualTo,
+    NotEqualTo,
 
+    // Unary Operators
+    Increment,
+    Decrement,
+    Not,
+
+    // Brackets ()
     LeftBracket,
     RightBracket,
 
+    // Squigglies {}
     LeftSquiggly,
     RightSquiggly,
 
+    // Keywords
     LetTok,
     IfTok,
     ElseTok,
     ForTok,
     WhileTok,
 
+    // Ending Tokens
     Semicolon,
-
     EndOfFile,
 }
 impl fmt::Display for TokenType {
@@ -50,6 +65,14 @@ impl fmt::Display for TokenType {
 
             TokenType::GreaterThan => write!(f, "GreaterThan"),
             TokenType::LessThan => write!(f, "LessThan"),
+            TokenType::GreaterThanOrEqualTo => write!(f, "GreaterThanOrEqualTo"),
+            TokenType::LessThanOrEqualTo => write!(f, "LessThanOrEqualTo"),
+            TokenType::EqualTo => write!(f, "EqualTo"),
+            TokenType::NotEqualTo => write!(f, "NotEqualTo"),
+
+            TokenType::Increment => write!(f, "Increment"),
+            TokenType::Decrement => write!(f, "Decrement"),
+            TokenType::Not => write!(f, "Not"),
 
             TokenType::LeftBracket => write!(f, "LeftBracket"),
             TokenType::RightBracket => write!(f, "RightBracket"),
@@ -83,6 +106,14 @@ impl TokenType {
 
             "GreaterThan" => Some(TokenType::GreaterThan),
             "LessThan" => Some(TokenType::LessThan),
+            "GreaterThanOrEqualTo" => Some(TokenType::GreaterThanOrEqualTo),
+            "LessThanOrEqualTo" => Some(TokenType::LessThanOrEqualTo),
+            "EqualTo" => Some(TokenType::EqualTo),
+            "NotEqualTo" => Some(TokenType::NotEqualTo),
+
+            "Increment" => Some(TokenType::Increment),
+            "Decrement" => Some(TokenType::Decrement),
+            "Not" => Some(TokenType::Not),
 
             "LeftBracket" => Some(TokenType::LeftBracket),
             "RightBracket" => Some(TokenType::RightBracket),
