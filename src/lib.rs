@@ -17,6 +17,9 @@ pub enum TokenType {
     Asterisk,
     Slash,
 
+    GreaterThan,
+    LessThan,
+
     LeftBracket,
     RightBracket,
 
@@ -44,6 +47,9 @@ impl fmt::Display for TokenType {
             TokenType::Minus => write!(f, "Minus"),
             TokenType::Asterisk => write!(f, "Asterisk"),
             TokenType::Slash => write!(f, "Slash"),
+
+            TokenType::GreaterThan => write!(f, "GreaterThan"),
+            TokenType::LessThan => write!(f, "LessThan"),
 
             TokenType::LeftBracket => write!(f, "LeftBracket"),
             TokenType::RightBracket => write!(f, "RightBracket"),
@@ -74,6 +80,9 @@ impl TokenType {
             "Minus" => Some(TokenType::Minus),
             "Asterisk" => Some(TokenType::Asterisk),
             "Slash" => Some(TokenType::Slash),
+
+            "GreaterThan" => Some(TokenType::GreaterThan),
+            "LessThan" => Some(TokenType::LessThan),
 
             "LeftBracket" => Some(TokenType::LeftBracket),
             "RightBracket" => Some(TokenType::RightBracket),
