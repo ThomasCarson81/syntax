@@ -1,12 +1,13 @@
-use std::fmt::{self, write};
+use serde::Serialize;
+use std::fmt;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
     pub line: usize,
 }
-#[derive(PartialEq, Debug, Clone, Copy)]
+#[derive(PartialEq, Debug, Clone, Copy, Serialize)]
 pub enum TokenType {
     // Values
     Identifier,
