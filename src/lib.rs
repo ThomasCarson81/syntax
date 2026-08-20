@@ -1,13 +1,13 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Token {
     pub token_type: TokenType,
     pub lexeme: String,
     pub line: usize,
 }
-#[derive(PartialEq, Debug, Clone, Copy, Serialize)]
+#[derive(PartialEq, Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum TokenType {
     // Values
     Identifier,
@@ -153,11 +153,11 @@ impl TokenType {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Program {
     pub statements: Vec<Statement>,
 }
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Statement {
     Let {
         identifier: String,
@@ -189,7 +189,7 @@ pub enum Statement {
     },
     Pass,
 }
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Expression {
     Number(f64),
     Identifier(String),
