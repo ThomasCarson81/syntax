@@ -170,9 +170,7 @@ pub enum Statement {
     If {
         condition: Expression,
         body: Vec<Statement>,
-    },
-    Else {
-        body: Vec<Statement>,
+        else_block: Option<Vec<Statement>>,
     },
     While {
         condition: Expression,
