@@ -33,6 +33,8 @@ pub enum TokenType {
     LessThanOrEqualTo,
     EqualTo,
     NotEqualTo,
+    LogicalAnd,
+    LogicalOr,
 
     // Unary Operators
     Increment,
@@ -81,6 +83,8 @@ impl fmt::Display for TokenType {
             TokenType::LessThanOrEqualTo => write!(f, "LessThanOrEqualTo"),
             TokenType::EqualTo => write!(f, "EqualTo"),
             TokenType::NotEqualTo => write!(f, "NotEqualTo"),
+            TokenType::LogicalAnd => write!(f, "LogicalAnd"),
+            TokenType::LogicalOr => write!(f, "LogicalOr"),
 
             TokenType::Increment => write!(f, "Increment"),
             TokenType::Decrement => write!(f, "Decrement"),
@@ -127,6 +131,8 @@ impl TokenType {
             "LessThanOrEqualTo" => Some(TokenType::LessThanOrEqualTo),
             "EqualTo" => Some(TokenType::EqualTo),
             "NotEqualTo" => Some(TokenType::NotEqualTo),
+            "LogicalAnd" => Some(TokenType::LogicalAnd),
+            "LogicalOr" => Some(TokenType::LogicalOr),
 
             "Increment" => Some(TokenType::Increment),
             "Decrement" => Some(TokenType::Decrement),
