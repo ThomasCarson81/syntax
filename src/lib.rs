@@ -55,6 +55,7 @@ pub enum TokenType {
     ElseTok,
     ForTok,
     WhileTok,
+    FnTok,
 
     // Ending Tokens
     Semicolon,
@@ -101,6 +102,7 @@ impl fmt::Display for TokenType {
             TokenType::ElseTok => write!(f, "ElseTok"),
             TokenType::ForTok => write!(f, "ForTok"),
             TokenType::WhileTok => write!(f, "WhileTok"),
+            TokenType::FnTok => write!(f, "FnTok"),
 
             TokenType::Semicolon => write!(f, "Semicolon"),
 
@@ -149,6 +151,7 @@ impl TokenType {
             "ElseTok" => Some(TokenType::ElseTok),
             "ForTok" => Some(TokenType::ForTok),
             "WhileTok" => Some(TokenType::WhileTok),
+            "FnTok" => Some(TokenType::FnTok),
 
             "Semicolon" => Some(TokenType::Semicolon),
 
@@ -188,6 +191,11 @@ pub enum Statement {
         increment: Option<Box<Statement>>,
         body: Vec<Statement>,
     },
+    FunctionDefinition {
+        identifier: String,
+        parameters: Vec<String>,
+        body: Vec<Statement>,
+    },
     ExpressionStatement {
         expression: Expression,
     },
@@ -205,5 +213,9 @@ pub enum Expression {
     UnaryOp {
         operator: TokenType,
         operand: Box<Expression>,
+    },
+    FunctionCall {
+        identifier: String,
+        arguments: Vec<Expression>,
     },
 }
