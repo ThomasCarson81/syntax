@@ -59,6 +59,7 @@ pub enum TokenType {
 
     // Ending Tokens
     Semicolon,
+    Comma,
     EndOfFile,
 }
 impl fmt::Display for TokenType {
@@ -105,6 +106,7 @@ impl fmt::Display for TokenType {
             TokenType::FnTok => write!(f, "FnTok"),
 
             TokenType::Semicolon => write!(f, "Semicolon"),
+            TokenType::Comma => write!(f, "Comma"),
 
             TokenType::EndOfFile => write!(f, "EndOfFile"),
         }
@@ -154,6 +156,7 @@ impl TokenType {
             "FnTok" => Some(TokenType::FnTok),
 
             "Semicolon" => Some(TokenType::Semicolon),
+            "Comma" => Some(TokenType::Comma),
 
             "EndOfFile" => Some(TokenType::EndOfFile),
 
