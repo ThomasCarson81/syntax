@@ -211,6 +211,11 @@ pub enum Statement {
     ExpressionStatement {
         expression: Expression,
     },
+    Return {
+        value: Option<Expression>,
+    },
+    Break,
+    Continue,
     Pass,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
