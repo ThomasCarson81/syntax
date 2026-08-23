@@ -249,15 +249,6 @@ pub enum Value {
     Bool(bool),
     Unit,
 }
-impl Value {
-    pub fn is_truthy(&self) -> bool {
-        match self {
-            Value::Number(n) => *n > 0.0,
-            Value::Bool(b) => *b,
-            Value::Unit => false,
-        }
-    }
-}
 
 impl fmt::Display for Value {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
