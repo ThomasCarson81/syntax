@@ -61,6 +61,7 @@ pub enum TokenType {
     Return,
     Break,
     Continue,
+    Scope,
 
     // Ending Tokens
     Semicolon,
@@ -114,6 +115,7 @@ impl fmt::Display for TokenType {
             TokenType::Return => write!(f, "Return"),
             TokenType::Break => write!(f, "Break"),
             TokenType::Continue => write!(f, "Continue"),
+            TokenType::Scope => write!(f, "Scope"),
 
             TokenType::Semicolon => write!(f, "Semicolon"),
             TokenType::Comma => write!(f, "Comma"),
@@ -169,6 +171,7 @@ impl TokenType {
             "Return" => Some(TokenType::Return),
             "Break" => Some(TokenType::Break),
             "Continue" => Some(TokenType::Continue),
+            "Scope" => Some(TokenType::Scope),
 
             "Semicolon" => Some(TokenType::Semicolon),
             "Comma" => Some(TokenType::Comma),
@@ -207,6 +210,9 @@ pub enum Statement {
         initialiser: Option<Box<Statement>>,
         condition: Option<Expression>,
         increment: Option<Box<Statement>>,
+        body: Vec<Statement>,
+    },
+    Scope {
         body: Vec<Statement>,
     },
     FunctionDefinition {
