@@ -12,6 +12,8 @@ pub enum TokenType {
     // Values
     Identifier,
     Number,
+    True,
+    False,
 
     // Binary Operators
     Equals,
@@ -70,6 +72,8 @@ impl fmt::Display for TokenType {
         match self {
             TokenType::Identifier => write!(f, "Identifier"),
             TokenType::Number => write!(f, "Number"),
+            TokenType::True => write!(f, "True"),
+            TokenType::False => write!(f, "False"),
 
             TokenType::Equals => write!(f, "Equals"),
             TokenType::Plus => write!(f, "Plus"),
@@ -123,6 +127,8 @@ impl TokenType {
         match s {
             "Identifier" => Some(TokenType::Identifier),
             "Number" => Some(TokenType::Number),
+            "True" => Some(TokenType::True),
+            "False" => Some(TokenType::False),
 
             "Equals" => Some(TokenType::Equals),
             "Plus" => Some(TokenType::Plus),
@@ -220,7 +226,7 @@ pub enum Statement {
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Expression {
-    Number(f64),
+    Literal(Value),
     Identifier(String),
     BinaryOp {
         left: Box<Expression>,
@@ -235,4 +241,30 @@ pub enum Expression {
         identifier: String,
         arguments: Vec<Expression>,
     },
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum Value {
+    Number(f64),
+    Bool(bool),
+    Unit,
+}
+impl Value {
+    pub fn is_truthy(&self) -> bool {
+        match self {
+            Value::Number(n) => *n > 0.0,
+            Value::Bool(b) => *b,
+            Value::Unit => false,
+        }
+    }
+}
+
+impl fmt::Display for Value {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Value::Unit => write!(f, "()"),
+            Value::Number(n) => write!(f, "{n}"),
+            Value::Bool(b) => write!(f, "{b}"),
+        }
+    }
 }
