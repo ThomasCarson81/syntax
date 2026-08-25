@@ -12,6 +12,7 @@ pub enum TokenType {
     // Values
     Identifier,
     Number,
+    String,
     True,
     False,
 
@@ -73,6 +74,7 @@ impl fmt::Display for TokenType {
         match self {
             TokenType::Identifier => write!(f, "Identifier"),
             TokenType::Number => write!(f, "Number"),
+            TokenType::String => write!(f, "String"),
             TokenType::True => write!(f, "True"),
             TokenType::False => write!(f, "False"),
 
@@ -129,6 +131,7 @@ impl TokenType {
         match s {
             "Identifier" => Some(TokenType::Identifier),
             "Number" => Some(TokenType::Number),
+            "String" => Some(TokenType::String),
             "True" => Some(TokenType::True),
             "False" => Some(TokenType::False),
 
@@ -252,6 +255,7 @@ pub enum Expression {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Value {
     Number(f64),
+    String(String),
     Bool(bool),
     Unit,
 }
@@ -261,6 +265,7 @@ impl fmt::Display for Value {
         match self {
             Value::Unit => write!(f, "()"),
             Value::Number(n) => write!(f, "{n}"),
+            Value::String(s) => write!(f, "{s}"),
             Value::Bool(b) => write!(f, "{b}"),
         }
     }
