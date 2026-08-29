@@ -387,6 +387,7 @@ pub struct Symbol {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FunctionSymbol {
     pub parameters: Vec<FunctionParameter>,
+    pub return_type: Type,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
