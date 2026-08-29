@@ -63,9 +63,12 @@ pub enum TokenType {
     Break,
     Continue,
     Scope,
+    TypeName,
+    Mut,
 
     // Ending Tokens
     Semicolon,
+    Colon,
     Comma,
     EndOfFile,
 }
@@ -118,8 +121,11 @@ impl fmt::Display for TokenType {
             TokenType::Break => write!(f, "Break"),
             TokenType::Continue => write!(f, "Continue"),
             TokenType::Scope => write!(f, "Scope"),
+            TokenType::TypeName => write!(f, "TypeName"),
+            TokenType::Mut => write!(f, "Mut"),
 
             TokenType::Semicolon => write!(f, "Semicolon"),
+            TokenType::Colon => write!(f, "Colon"),
             TokenType::Comma => write!(f, "Comma"),
 
             TokenType::EndOfFile => write!(f, "EndOfFile"),
@@ -175,8 +181,11 @@ impl TokenType {
             "Break" => Some(TokenType::Break),
             "Continue" => Some(TokenType::Continue),
             "Scope" => Some(TokenType::Scope),
+            "TypeName" => Some(TokenType::TypeName),
+            "Mut" => Some(TokenType::Mut),
 
             "Semicolon" => Some(TokenType::Semicolon),
+            "Colon" => Some(TokenType::Colon),
             "Comma" => Some(TokenType::Comma),
 
             "EndOfFile" => Some(TokenType::EndOfFile),
@@ -195,6 +204,8 @@ pub enum Statement {
     Let {
         identifier: String,
         expression: Expression,
+        mutable: bool,
+        var_type: Option<Type>,
     },
     Assignment {
         identifier: String,
@@ -220,8 +231,9 @@ pub enum Statement {
     },
     FunctionDefinition {
         identifier: String,
-        parameters: Vec<String>,
+        parameters: Vec<FunctionParameter>,
         body: Vec<Statement>,
+        return_type: Type,
     },
     ExpressionStatement {
         expression: Expression,
@@ -304,4 +316,81 @@ impl fmt::Display for Value {
             Value::Bool(b) => write!(f, "{b}"),
         }
     }
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub enum Type {
+    // signed ints
+    I8,
+    I16,
+    I32,
+    I64,
+    // unsigned ints
+    U8,
+    U16,
+    U32,
+    U64,
+    // floats
+    F32,
+    F64,
+    // others
+    String,
+    Bool,
+    Unit,
+}
+impl fmt::Display for Type {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Type::I8 => write!(f, "i8"),
+            Type::I16 => write!(f, "i16"),
+            Type::I32 => write!(f, "i32"),
+            Type::I64 => write!(f, "i64"),
+            Type::U8 => write!(f, "u8"),
+            Type::U16 => write!(f, "u16"),
+            Type::U32 => write!(f, "u32"),
+            Type::U64 => write!(f, "u64"),
+            Type::F32 => write!(f, "f32"),
+            Type::F64 => write!(f, "f64"),
+            Type::String => write!(f, "string"),
+            Type::Bool => write!(f, "bool"),
+            Type::Unit => write!(f, "unit"),
+        }
+    }
+}
+impl Type {
+    pub fn from_str(s: &str) -> Option<Type> {
+        match s {
+            "i8" => Some(Type::I8),
+            "i16" => Some(Type::I16),
+            "i32" => Some(Type::I32),
+            "i64" => Some(Type::I64),
+            "u8" => Some(Type::U8),
+            "u16" => Some(Type::U16),
+            "u32" => Some(Type::U32),
+            "u64" => Some(Type::U64),
+            "f32" => Some(Type::F32),
+            "f64" => Some(Type::F64),
+            "string" => Some(Type::String),
+            "bool" => Some(Type::Bool),
+            "unit" => Some(Type::Unit),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+pub struct Symbol {
+    pub mutable: bool,
+    pub var_type: Type,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FunctionSymbol {
+    pub parameters: Vec<FunctionParameter>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FunctionParameter {
+    pub name: String,
+    pub param_type: Type,
 }
