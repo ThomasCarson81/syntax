@@ -278,6 +278,9 @@ pub enum Number {
 
     F32(f32),
     F64(f64),
+
+    IntegerLiteral(i64),
+    FloatLiteral(f64),
 }
 
 impl fmt::Display for Number {
@@ -295,6 +298,9 @@ impl fmt::Display for Number {
 
             Number::F32(n) => write!(f, "{n}"),
             Number::F64(n) => write!(f, "{n}"),
+
+            Number::IntegerLiteral(n) => write!(f, "{n}"),
+            Number::FloatLiteral(n) => write!(f, "{n}"),
         }
     }
 }
