@@ -140,5 +140,16 @@ pub fn builtin_functions() -> Vec<Function> {
             }),
     );
 
+    functions.push(Function {
+        id: FunctionId(functions.len()),
+        signature: FunctionSignature {
+            name: "time".into(),
+            parameters: vec![],
+            return_type: Type::F64,
+        },
+        parameters: vec![],
+        implementation: FunctionImplementation::Builtin(BuiltinId::Time),
+    });
+
     functions
 }

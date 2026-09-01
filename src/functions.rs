@@ -28,6 +28,7 @@ pub enum BuiltinId {
     ToString,
     Input,
     ToNum(Type),
+    Time,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Function {
