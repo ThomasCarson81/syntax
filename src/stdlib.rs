@@ -65,5 +65,29 @@ pub fn builtin_functions() -> Vec<Function> {
                 implementation: FunctionImplementation::Builtin(BuiltinId::ToString),
             }),
     );
+    let input_id = functions.len();
+    functions.push(Function {
+        id: FunctionId(input_id),
+        signature: FunctionSignature {
+            name: "input".into(),
+            parameters: vec![],
+            return_type: Type::String,
+        },
+        parameters: vec![],
+        implementation: FunctionImplementation::Builtin(BuiltinId::Input),
+    });
+    functions.push(Function {
+        id: FunctionId(input_id + 1),
+        signature: FunctionSignature {
+            name: "input".into(),
+            parameters: vec![Type::String],
+            return_type: Type::String,
+        },
+        parameters: vec![FunctionParameter {
+            name: "message".into(),
+            param_type: Type::String,
+        }],
+        implementation: FunctionImplementation::Builtin(BuiltinId::Input),
+    });
     functions
 }
