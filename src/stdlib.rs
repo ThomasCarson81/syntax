@@ -1,5 +1,8 @@
 use crate::{
-    functions::{BuiltinId, Function, FunctionId, FunctionImplementation, FunctionSignature},
+    functions::{
+        BuiltinId, Function, FunctionId, FunctionImplementation, FunctionParameter,
+        FunctionSignature,
+    },
     types::Type,
 };
 
@@ -12,6 +15,10 @@ pub fn builtin_functions() -> Vec<Function> {
                 parameters: vec![Type::String],
                 return_type: Type::Unit,
             },
+            parameters: vec![FunctionParameter {
+                name: "value".into(),
+                param_type: Type::String,
+            }],
             implementation: FunctionImplementation::Builtin(BuiltinId::Print),
         },
         Function {
@@ -21,6 +28,10 @@ pub fn builtin_functions() -> Vec<Function> {
                 parameters: vec![Type::String],
                 return_type: Type::Unit,
             },
+            parameters: vec![FunctionParameter {
+                name: "value".into(),
+                param_type: Type::String,
+            }],
             implementation: FunctionImplementation::Builtin(BuiltinId::Println),
         },
     ]

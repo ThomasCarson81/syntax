@@ -6,7 +6,7 @@ pub struct FunctionParameter {
     pub name: String,
     pub param_type: Type,
 }
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FunctionSignature {
     pub name: String,
     pub parameters: Vec<Type>,
@@ -15,22 +15,25 @@ pub struct FunctionSignature {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FunctionId(pub usize);
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum FunctionImplementation {
     Oxide(FunctionBody),
     Builtin(BuiltinId),
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum BuiltinId {
     Print,
     Println,
 }
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Function {
     pub id: FunctionId,
     pub signature: FunctionSignature,
+    pub parameters: Vec<FunctionParameter>,
     pub implementation: FunctionImplementation,
 }
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FunctionTable {
     pub functions: Vec<Function>,
 }
@@ -63,7 +66,14 @@ impl FunctionTable {
             .any(|function| function.signature == signature)
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FunctionBody {
     pub statements: Vec<Statement>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CheckedProgram {
+    pub function_table: FunctionTable,
+    pub globals: Vec<Statement>,
+    pub main_function_id: FunctionId,
 }
