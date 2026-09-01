@@ -89,5 +89,56 @@ pub fn builtin_functions() -> Vec<Function> {
         }],
         implementation: FunctionImplementation::Builtin(BuiltinId::Input),
     });
+
+    let num_to_num_id = functions.len();
+
+    functions.extend(
+        numeric_types
+            .iter()
+            .copied()
+            .flat_map(|return_type| {
+                numeric_types
+                    .iter()
+                    .copied()
+                    .map(move |param_type| (param_type, return_type))
+            })
+            .enumerate()
+            .map(|(index, (param_type, return_type))| Function {
+                id: FunctionId(num_to_num_id + index),
+                signature: FunctionSignature {
+                    name: format!("to_{}", return_type),
+                    parameters: vec![param_type],
+                    return_type,
+                },
+                parameters: vec![FunctionParameter {
+                    name: "value".into(),
+                    param_type,
+                }],
+                implementation: FunctionImplementation::Builtin(BuiltinId::ToNum(return_type)),
+            }),
+    );
+
+    let string_to_num_id = functions.len();
+
+    functions.extend(
+        numeric_types
+            .iter()
+            .copied()
+            .enumerate()
+            .map(|(index, return_type)| Function {
+                id: FunctionId(string_to_num_id + index),
+                signature: FunctionSignature {
+                    name: format!("to_{}", return_type),
+                    parameters: vec![Type::String],
+                    return_type,
+                },
+                parameters: vec![FunctionParameter {
+                    name: "value".into(),
+                    param_type: Type::String,
+                }],
+                implementation: FunctionImplementation::Builtin(BuiltinId::ToNum(return_type)),
+            }),
+    );
+
     functions
 }
