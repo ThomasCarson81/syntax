@@ -7,7 +7,7 @@ use crate::{
 };
 
 pub fn builtin_functions() -> Vec<Function> {
-    vec![
+    let mut functions = vec![
         Function {
             id: FunctionId(0),
             signature: FunctionSignature {
@@ -34,5 +34,36 @@ pub fn builtin_functions() -> Vec<Function> {
             }],
             implementation: FunctionImplementation::Builtin(BuiltinId::Println),
         },
-    ]
+    ];
+    let numeric_types = [
+        Type::I8,
+        Type::I16,
+        Type::I32,
+        Type::I64,
+        Type::U8,
+        Type::U16,
+        Type::U32,
+        Type::U64,
+        Type::F32,
+        Type::F64,
+    ];
+    functions.extend(
+        numeric_types
+            .into_iter()
+            .enumerate()
+            .map(|(index, param_type)| Function {
+                id: FunctionId(index + 2),
+                signature: FunctionSignature {
+                    name: "to_string".into(),
+                    parameters: vec![param_type],
+                    return_type: Type::String,
+                },
+                parameters: vec![FunctionParameter {
+                    name: "value".into(),
+                    param_type,
+                }],
+                implementation: FunctionImplementation::Builtin(BuiltinId::ToString),
+            }),
+    );
+    functions
 }

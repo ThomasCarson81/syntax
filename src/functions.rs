@@ -25,6 +25,7 @@ pub enum FunctionImplementation {
 pub enum BuiltinId {
     Print,
     Println,
+    ToString,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Function {
