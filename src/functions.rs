@@ -1,4 +1,4 @@
-use crate::{ast::Statement, types::Type};
+use crate::{ast::Statement, stdlib::BuiltinId, types::Type};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -21,15 +21,6 @@ pub enum FunctionImplementation {
     Builtin(BuiltinId),
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum BuiltinId {
-    Print,
-    Println,
-    ToString,
-    Input,
-    ToNum(Type),
-    Time,
-}
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Function {
     pub id: FunctionId,

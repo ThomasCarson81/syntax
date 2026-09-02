@@ -1,10 +1,20 @@
 use crate::{
     functions::{
-        BuiltinId, Function, FunctionId, FunctionImplementation, FunctionParameter,
-        FunctionSignature,
+        Function, FunctionId, FunctionImplementation, FunctionParameter, FunctionSignature,
     },
     types::Type,
 };
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum BuiltinId {
+    Print,
+    Println,
+    ToString,
+    Input,
+    ToNum(Type),
+    Time,
+}
 
 pub fn builtin_functions() -> Vec<Function> {
     let mut functions = vec![
