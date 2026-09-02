@@ -32,6 +32,14 @@ const NUMERIC_TYPES: [Type; 10] = [
     Type::F32,
     Type::F64,
 ];
+const NUMERIC_TYPES_NO_UNSIGNED: [Type; 6] = [
+    Type::I8,
+    Type::I16,
+    Type::I32,
+    Type::I64,
+    Type::F32,
+    Type::F64,
+];
 
 pub fn builtin_functions() -> Vec<Function> {
     let mut functions = vec![
@@ -174,25 +182,21 @@ fn math_functions(start_index: usize) -> Vec<Function> {
     let mut math_funcs: Vec<Function> = vec![];
 
     let abs_index = start_index;
-    math_funcs.extend(
-        NUMERIC_TYPES
-            .iter()
-            .copied()
-            .enumerate()
-            .map(|(index, num_type)| Function {
-                id: FunctionId(abs_index + index),
-                signature: FunctionSignature {
-                    name: "abs".into(),
-                    parameters: vec![num_type],
-                    return_type: num_type,
-                },
-                parameters: vec![FunctionParameter {
-                    name: "value".into(),
-                    param_type: num_type,
-                }],
-                implementation: FunctionImplementation::Builtin(BuiltinId::Abs),
-            }),
-    );
+    math_funcs.extend(NUMERIC_TYPES_NO_UNSIGNED.iter().copied().enumerate().map(
+        |(index, num_type)| Function {
+            id: FunctionId(abs_index + index),
+            signature: FunctionSignature {
+                name: "abs".into(),
+                parameters: vec![num_type],
+                return_type: num_type,
+            },
+            parameters: vec![FunctionParameter {
+                name: "value".into(),
+                param_type: num_type,
+            }],
+            implementation: FunctionImplementation::Builtin(BuiltinId::Abs),
+        },
+    ));
 
     let min_index = start_index + math_funcs.len();
     math_funcs.extend(
