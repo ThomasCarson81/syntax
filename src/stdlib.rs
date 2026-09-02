@@ -14,7 +14,24 @@ pub enum BuiltinId {
     Input,
     ToNum(Type),
     Time,
+    Abs,
+    Min,
+    Max,
+    Clamp,
 }
+
+const NUMERIC_TYPES: [Type; 10] = [
+    Type::I8,
+    Type::I16,
+    Type::I32,
+    Type::I64,
+    Type::U8,
+    Type::U16,
+    Type::U32,
+    Type::U64,
+    Type::F32,
+    Type::F64,
+];
 
 pub fn builtin_functions() -> Vec<Function> {
     let mut functions = vec![
@@ -45,20 +62,8 @@ pub fn builtin_functions() -> Vec<Function> {
             implementation: FunctionImplementation::Builtin(BuiltinId::Println),
         },
     ];
-    let numeric_types = [
-        Type::I8,
-        Type::I16,
-        Type::I32,
-        Type::I64,
-        Type::U8,
-        Type::U16,
-        Type::U32,
-        Type::U64,
-        Type::F32,
-        Type::F64,
-    ];
     functions.extend(
-        numeric_types
+        NUMERIC_TYPES
             .into_iter()
             .enumerate()
             .map(|(index, param_type)| Function {
@@ -103,11 +108,11 @@ pub fn builtin_functions() -> Vec<Function> {
     let num_to_num_id = functions.len();
 
     functions.extend(
-        numeric_types
+        NUMERIC_TYPES
             .iter()
             .copied()
             .flat_map(|return_type| {
-                numeric_types
+                NUMERIC_TYPES
                     .iter()
                     .copied()
                     .map(move |param_type| (param_type, return_type))
@@ -131,7 +136,7 @@ pub fn builtin_functions() -> Vec<Function> {
     let string_to_num_id = functions.len();
 
     functions.extend(
-        numeric_types
+        NUMERIC_TYPES
             .iter()
             .copied()
             .enumerate()
@@ -160,6 +165,119 @@ pub fn builtin_functions() -> Vec<Function> {
         parameters: vec![],
         implementation: FunctionImplementation::Builtin(BuiltinId::Time),
     });
+    functions.extend(math_functions(functions.len()));
 
     functions
+}
+
+fn math_functions(start_index: usize) -> Vec<Function> {
+    let mut math_funcs: Vec<Function> = vec![];
+
+    let abs_index = start_index;
+    math_funcs.extend(
+        NUMERIC_TYPES
+            .iter()
+            .copied()
+            .enumerate()
+            .map(|(index, num_type)| Function {
+                id: FunctionId(abs_index + index),
+                signature: FunctionSignature {
+                    name: "abs".into(),
+                    parameters: vec![num_type],
+                    return_type: num_type,
+                },
+                parameters: vec![FunctionParameter {
+                    name: "value".into(),
+                    param_type: num_type,
+                }],
+                implementation: FunctionImplementation::Builtin(BuiltinId::Abs),
+            }),
+    );
+
+    let min_index = start_index + math_funcs.len();
+    math_funcs.extend(
+        NUMERIC_TYPES
+            .iter()
+            .copied()
+            .enumerate()
+            .map(|(index, num_type)| Function {
+                id: FunctionId(min_index + index),
+                signature: FunctionSignature {
+                    name: "min".into(),
+                    parameters: vec![num_type, num_type],
+                    return_type: num_type,
+                },
+                parameters: vec![
+                    FunctionParameter {
+                        name: "x".into(),
+                        param_type: num_type,
+                    },
+                    FunctionParameter {
+                        name: "y".into(),
+                        param_type: num_type,
+                    },
+                ],
+                implementation: FunctionImplementation::Builtin(BuiltinId::Min),
+            }),
+    );
+
+    let max_index = start_index + math_funcs.len();
+    math_funcs.extend(
+        NUMERIC_TYPES
+            .iter()
+            .copied()
+            .enumerate()
+            .map(|(index, num_type)| Function {
+                id: FunctionId(max_index + index),
+                signature: FunctionSignature {
+                    name: "max".into(),
+                    parameters: vec![num_type, num_type],
+                    return_type: num_type,
+                },
+                parameters: vec![
+                    FunctionParameter {
+                        name: "x".into(),
+                        param_type: num_type,
+                    },
+                    FunctionParameter {
+                        name: "y".into(),
+                        param_type: num_type,
+                    },
+                ],
+                implementation: FunctionImplementation::Builtin(BuiltinId::Max),
+            }),
+    );
+
+    let clamp_index = start_index + math_funcs.len();
+    math_funcs.extend(
+        NUMERIC_TYPES
+            .iter()
+            .copied()
+            .enumerate()
+            .map(|(index, num_type)| Function {
+                id: FunctionId(clamp_index + index),
+                signature: FunctionSignature {
+                    name: "clamp".into(),
+                    parameters: vec![num_type, num_type, num_type],
+                    return_type: num_type,
+                },
+                parameters: vec![
+                    FunctionParameter {
+                        name: "value".into(),
+                        param_type: num_type,
+                    },
+                    FunctionParameter {
+                        name: "min".into(),
+                        param_type: num_type,
+                    },
+                    FunctionParameter {
+                        name: "max".into(),
+                        param_type: num_type,
+                    },
+                ],
+                implementation: FunctionImplementation::Builtin(BuiltinId::Clamp),
+            }),
+    );
+
+    math_funcs
 }
