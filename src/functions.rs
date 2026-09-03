@@ -12,7 +12,7 @@ pub struct FunctionSignature {
     pub parameters: Vec<Type>,
     pub return_type: Type,
 }
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct FunctionId(pub usize);
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
