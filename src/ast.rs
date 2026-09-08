@@ -258,10 +258,12 @@ pub enum Expression {
         left: Box<Expression>,
         operator: TokenType,
         right: Box<Expression>,
+        inferred_type: Option<Type>,
     },
     UnaryOp {
         operator: TokenType,
         operand: Box<Expression>,
+        inferred_type: Option<Type>,
     },
     UnresolvedFunctionCall {
         identifier: String,
