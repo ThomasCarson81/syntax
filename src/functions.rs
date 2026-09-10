@@ -33,8 +33,8 @@ pub struct FunctionTable {
     pub functions: Vec<Function>,
 }
 impl FunctionTable {
-    pub fn get(&self, id: FunctionId) -> Option<&Function> {
-        self.functions.iter().find(|f| f.id == id)
+    pub fn get(&self, id: &FunctionId) -> Option<&Function> {
+        self.functions.iter().find(|f| f.id == *id)
     }
 
     pub fn get_by_name(&self, name: &str) -> Option<&Function> {
