@@ -42,6 +42,14 @@ impl fmt::Display for Number {
     }
 }
 
+#[derive(Debug)]
+pub enum ControlFlow {
+    Normal,
+    Return(Value),
+    Break,
+    Continue,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Value {
     Number(Number),
