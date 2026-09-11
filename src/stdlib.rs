@@ -18,6 +18,7 @@ pub enum BuiltinId {
     Min,
     Max,
     Clamp,
+    Sqrt,
 }
 
 const NUMERIC_TYPES: [Type; 10] = [
@@ -282,6 +283,34 @@ fn math_functions(start_index: usize) -> Vec<Function> {
                 implementation: FunctionImplementation::Builtin(BuiltinId::Clamp),
             }),
     );
+
+    let sqrt_index = start_index + math_funcs.len();
+    math_funcs.push(Function {
+        id: FunctionId(sqrt_index),
+        signature: FunctionSignature {
+            name: "sqrt".into(),
+            parameters: vec![Type::F32],
+            return_type: Type::F32,
+        },
+        parameters: vec![FunctionParameter {
+            name: "value".into(),
+            param_type: Type::F32,
+        }],
+        implementation: FunctionImplementation::Builtin(BuiltinId::Sqrt),
+    });
+    math_funcs.push(Function {
+        id: FunctionId(sqrt_index + 1),
+        signature: FunctionSignature {
+            name: "sqrt".into(),
+            parameters: vec![Type::F64],
+            return_type: Type::F64,
+        },
+        parameters: vec![FunctionParameter {
+            name: "value".into(),
+            param_type: Type::F64,
+        }],
+        implementation: FunctionImplementation::Builtin(BuiltinId::Sqrt),
+    });
 
     math_funcs
 }
