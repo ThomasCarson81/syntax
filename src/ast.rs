@@ -22,6 +22,7 @@ pub enum TokenType {
 
     // Binary Operators
     Equals,
+    Walrus,
     Plus,
     Minus,
     Asterisk,
@@ -86,6 +87,7 @@ impl fmt::Display for TokenType {
             TokenType::False => write!(f, "False"),
 
             TokenType::Equals => write!(f, "Equals"),
+            TokenType::Walrus => write!(f, "Walrus"),
             TokenType::Plus => write!(f, "Plus"),
             TokenType::Minus => write!(f, "Minus"),
             TokenType::Asterisk => write!(f, "Asterisk"),
@@ -146,6 +148,7 @@ impl TokenType {
             "False" => Some(TokenType::False),
 
             "Equals" => Some(TokenType::Equals),
+            "Walrus" => Some(TokenType::Walrus),
             "Plus" => Some(TokenType::Plus),
             "Minus" => Some(TokenType::Minus),
             "Asterisk" => Some(TokenType::Asterisk),
