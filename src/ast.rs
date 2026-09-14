@@ -27,12 +27,14 @@ pub enum TokenType {
     Minus,
     Asterisk,
     Slash,
+    Modulo,
 
     // Shorthand Binary Operators
     PlusEquals,
     MinusEquals,
     AsteriskEquals,
     SlashEquals,
+    ModuloEquals,
 
     // Comparison Operators
     GreaterThan,
@@ -92,11 +94,13 @@ impl fmt::Display for TokenType {
             TokenType::Minus => write!(f, "Minus"),
             TokenType::Asterisk => write!(f, "Asterisk"),
             TokenType::Slash => write!(f, "Slash"),
+            TokenType::Modulo => write!(f, "Modulo"),
 
             TokenType::PlusEquals => write!(f, "PlusEquals"),
             TokenType::MinusEquals => write!(f, "MinusEquals"),
             TokenType::AsteriskEquals => write!(f, "AsteriskEquals"),
             TokenType::SlashEquals => write!(f, "SlashEquals"),
+            TokenType::ModuloEquals => write!(f, "ModuloEquals"),
 
             TokenType::GreaterThan => write!(f, "GreaterThan"),
             TokenType::LessThan => write!(f, "LessThan"),
@@ -153,11 +157,13 @@ impl TokenType {
             "Minus" => Some(TokenType::Minus),
             "Asterisk" => Some(TokenType::Asterisk),
             "Slash" => Some(TokenType::Slash),
+            "Modulo" => Some(TokenType::Modulo),
 
             "PlusEquals" => Some(TokenType::PlusEquals),
             "MinusEquals" => Some(TokenType::MinusEquals),
             "AsteriskEquals" => Some(TokenType::AsteriskEquals),
             "SlashEquals" => Some(TokenType::SlashEquals),
+            "ModuloEquals" => Some(TokenType::ModuloEquals),
 
             "GreaterThan" => Some(TokenType::GreaterThan),
             "LessThan" => Some(TokenType::LessThan),
