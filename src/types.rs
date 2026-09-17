@@ -69,8 +69,18 @@ impl fmt::Display for Value {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub struct TypeId(pub usize);
+
+impl fmt::Display for TypeId {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "T{}", self.0)
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum Type {
+    //Primitives
     // signed ints
     I8,
     I16,
@@ -88,6 +98,15 @@ pub enum Type {
     String,
     Bool,
     Unit,
+
+    // Composite types
+    Tuple(Vec<Type>),
+
+    // Named types, optionally generic
+    Named { id: TypeId, arguments: Vec<Type> },
+
+    // Generic type parameters
+    GenericParameter(String),
 }
 impl fmt::Display for Type {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -105,6 +124,9 @@ impl fmt::Display for Type {
             Type::String => write!(f, "string"),
             Type::Bool => write!(f, "bool"),
             Type::Unit => write!(f, "unit"),
+            Type::Tuple(items) => write!(f, "tuple({:?})", items),
+            Type::Named { id, arguments } => write!(f, "{}<{:?}>", id, arguments),
+            Type::GenericParameter(id) => write!(f, "T{}", id),
         }
     }
 }
@@ -127,4 +149,39 @@ impl Type {
             _ => None,
         }
     }
+}
+
+pub struct TypeDefinition {
+    pub id: TypeId,
+    pub name: String,
+    pub parameters: Vec<String>,
+    pub kind: TypeDefinitionKind,
+}
+
+pub enum TypeDefinitionKind {
+    Struct(StructDefinition),
+    Enum(EnumDefinition),
+}
+
+pub struct StructDefinition {
+    pub fields: Vec<StructField>,
+}
+
+pub struct StructField {
+    pub name: String,
+    pub field_type: Type,
+}
+pub struct EnumDefinition {
+    pub variants: Vec<EnumVariant>,
+}
+
+pub struct EnumVariant {
+    pub name: String,
+    pub fields: EnumVariantFields,
+}
+
+pub enum EnumVariantFields {
+    Unit,
+    Tuple(Vec<Type>),
+    Struct(Vec<StructField>),
 }

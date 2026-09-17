@@ -79,7 +79,7 @@ pub fn builtin_functions() -> Vec<Function> {
                 id: FunctionId(index + 2),
                 signature: FunctionSignature {
                     name: "to_string".into(),
-                    parameters: vec![param_type],
+                    parameters: vec![param_type.clone()],
                     return_type: Type::String,
                 },
                 parameters: vec![FunctionParameter {
@@ -119,20 +119,20 @@ pub fn builtin_functions() -> Vec<Function> {
     functions.extend(
         NUMERIC_TYPES
             .iter()
-            .copied()
+            .cloned()
             .flat_map(|return_type| {
                 NUMERIC_TYPES
                     .iter()
-                    .copied()
-                    .map(move |param_type| (param_type, return_type))
+                    .cloned()
+                    .map(move |param_type| (param_type, return_type.clone()))
             })
             .enumerate()
             .map(|(index, (param_type, return_type))| Function {
                 id: FunctionId(num_to_num_id + index),
                 signature: FunctionSignature {
                     name: format!("to_{}", return_type),
-                    parameters: vec![param_type],
-                    return_type,
+                    parameters: vec![param_type.clone()],
+                    return_type: return_type.clone(),
                 },
                 parameters: vec![FunctionParameter {
                     name: "value".into(),
@@ -147,14 +147,14 @@ pub fn builtin_functions() -> Vec<Function> {
     functions.extend(
         NUMERIC_TYPES
             .iter()
-            .copied()
+            .cloned()
             .enumerate()
             .map(|(index, return_type)| Function {
                 id: FunctionId(string_to_num_id + index),
                 signature: FunctionSignature {
                     name: format!("to_{}", return_type),
                     parameters: vec![Type::String],
-                    return_type,
+                    return_type: return_type.clone(),
                 },
                 parameters: vec![FunctionParameter {
                     name: "value".into(),
@@ -183,13 +183,13 @@ fn math_functions(start_index: usize) -> Vec<Function> {
     let mut math_funcs: Vec<Function> = vec![];
 
     let abs_index = start_index;
-    math_funcs.extend(NUMERIC_TYPES_NO_UNSIGNED.iter().copied().enumerate().map(
+    math_funcs.extend(NUMERIC_TYPES_NO_UNSIGNED.iter().cloned().enumerate().map(
         |(index, num_type)| Function {
             id: FunctionId(abs_index + index),
             signature: FunctionSignature {
                 name: "abs".into(),
-                parameters: vec![num_type],
-                return_type: num_type,
+                parameters: vec![num_type.clone()],
+                return_type: num_type.clone(),
             },
             parameters: vec![FunctionParameter {
                 name: "value".into(),
@@ -203,19 +203,19 @@ fn math_functions(start_index: usize) -> Vec<Function> {
     math_funcs.extend(
         NUMERIC_TYPES
             .iter()
-            .copied()
+            .cloned()
             .enumerate()
             .map(|(index, num_type)| Function {
                 id: FunctionId(min_index + index),
                 signature: FunctionSignature {
                     name: "min".into(),
-                    parameters: vec![num_type, num_type],
-                    return_type: num_type,
+                    parameters: vec![num_type.clone(), num_type.clone()],
+                    return_type: num_type.clone(),
                 },
                 parameters: vec![
                     FunctionParameter {
                         name: "x".into(),
-                        param_type: num_type,
+                        param_type: num_type.clone(),
                     },
                     FunctionParameter {
                         name: "y".into(),
@@ -230,19 +230,19 @@ fn math_functions(start_index: usize) -> Vec<Function> {
     math_funcs.extend(
         NUMERIC_TYPES
             .iter()
-            .copied()
+            .cloned()
             .enumerate()
             .map(|(index, num_type)| Function {
                 id: FunctionId(max_index + index),
                 signature: FunctionSignature {
                     name: "max".into(),
-                    parameters: vec![num_type, num_type],
-                    return_type: num_type,
+                    parameters: vec![num_type.clone(), num_type.clone()],
+                    return_type: num_type.clone(),
                 },
                 parameters: vec![
                     FunctionParameter {
                         name: "x".into(),
-                        param_type: num_type,
+                        param_type: num_type.clone(),
                     },
                     FunctionParameter {
                         name: "y".into(),
@@ -257,23 +257,23 @@ fn math_functions(start_index: usize) -> Vec<Function> {
     math_funcs.extend(
         NUMERIC_TYPES
             .iter()
-            .copied()
+            .cloned()
             .enumerate()
             .map(|(index, num_type)| Function {
                 id: FunctionId(clamp_index + index),
                 signature: FunctionSignature {
                     name: "clamp".into(),
-                    parameters: vec![num_type, num_type, num_type],
-                    return_type: num_type,
+                    parameters: vec![num_type.clone(), num_type.clone(), num_type.clone()],
+                    return_type: num_type.clone(),
                 },
                 parameters: vec![
                     FunctionParameter {
                         name: "value".into(),
-                        param_type: num_type,
+                        param_type: num_type.clone(),
                     },
                     FunctionParameter {
                         name: "min".into(),
-                        param_type: num_type,
+                        param_type: num_type.clone(),
                     },
                     FunctionParameter {
                         name: "max".into(),
