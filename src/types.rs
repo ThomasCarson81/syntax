@@ -151,6 +151,7 @@ impl Type {
     }
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TypeDefinition {
     pub id: TypeId,
     pub name: String,
@@ -158,30 +159,60 @@ pub struct TypeDefinition {
     pub kind: TypeDefinitionKind,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum TypeDefinitionKind {
     Struct(StructDefinition),
     Enum(EnumDefinition),
 }
 
+// the actual struct definition (`struct Point { ... }`)
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StructDefinition {
     pub fields: Vec<StructField>,
 }
 
+// the field of a struct (`x: i32`, `y: i32`)
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StructField {
     pub name: String,
     pub field_type: Type,
 }
+
+// the actual enum definition (`enum Result { ... }`)
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EnumDefinition {
     pub variants: Vec<EnumVariant>,
 }
 
+// the variant of an enum (`Ok`, `Err`)
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EnumVariant {
     pub name: String,
     pub fields: EnumVariantFields,
 }
 
+// the fields of an enum variant (`T`, `E`)
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum EnumVariantFields {
     Unit,
     Tuple(Vec<Type>),
     Struct(Vec<StructField>),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TypeTable {
+    pub types: Vec<TypeDefinition>,
+}
+impl TypeTable {
+    pub fn get(&self, id: &TypeId) -> Option<&TypeDefinition> {
+        self.types.iter().find(|t| t.id == *id)
+    }
+
+    pub fn get_by_name(&self, name: &str) -> Option<&TypeDefinition> {
+        self.types.iter().find(|t| t.name == name)
+    }
+
+    pub fn types_named(&self, name: &str) -> impl Iterator<Item = &TypeDefinition> {
+        self.types.iter().filter(move |t| t.name == name)
+    }
 }
