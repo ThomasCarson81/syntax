@@ -103,7 +103,7 @@ pub enum Type {
     Tuple(Vec<Type>),
 
     // Named types, optionally generic
-    Named { id: TypeId, arguments: Vec<Type> },
+    Named { name: String, arguments: Vec<Type> },
 
     // Generic type parameters
     GenericParameter(String),
@@ -125,7 +125,7 @@ impl fmt::Display for Type {
             Type::Bool => write!(f, "bool"),
             Type::Unit => write!(f, "unit"),
             Type::Tuple(items) => write!(f, "tuple({:?})", items),
-            Type::Named { id, arguments } => write!(f, "{}<{:?}>", id, arguments),
+            Type::Named { name, arguments } => write!(f, "{}<{:?}>", name, arguments),
             Type::GenericParameter(id) => write!(f, "T{}", id),
         }
     }
