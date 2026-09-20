@@ -68,6 +68,8 @@ pub enum TokenType {
     Scope,
     TypeName,
     Mut,
+    Struct,
+    Enum,
 
     // Ending Tokens
     Semicolon,
@@ -129,6 +131,8 @@ impl fmt::Display for TokenType {
             TokenType::Scope => write!(f, "Scope"),
             TokenType::TypeName => write!(f, "TypeName"),
             TokenType::Mut => write!(f, "Mut"),
+            TokenType::Struct => write!(f, "Struct"),
+            TokenType::Enum => write!(f, "Enum"),
 
             TokenType::Semicolon => write!(f, "Semicolon"),
             TokenType::Colon => write!(f, "Colon"),
@@ -192,6 +196,8 @@ impl TokenType {
             "Scope" => Some(TokenType::Scope),
             "TypeName" => Some(TokenType::TypeName),
             "Mut" => Some(TokenType::Mut),
+            "Struct" => Some(TokenType::Struct),
+            "Enum" => Some(TokenType::Enum),
 
             "Semicolon" => Some(TokenType::Semicolon),
             "Colon" => Some(TokenType::Colon),
