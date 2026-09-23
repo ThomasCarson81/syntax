@@ -204,6 +204,9 @@ pub struct TypeTable {
     pub types: Vec<TypeDefinition>,
 }
 impl TypeTable {
+    pub fn new() -> Self {
+        TypeTable { types: Vec::new() }
+    }
     pub fn get(&self, id: &TypeId) -> Option<&TypeDefinition> {
         self.types.iter().find(|t| t.id == *id)
     }

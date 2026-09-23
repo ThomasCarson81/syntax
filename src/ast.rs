@@ -1,7 +1,7 @@
 use crate::{
     functions::{FunctionId, FunctionParameter},
     tokens::TokenType,
-    types::{Type, Value},
+    types::{Type, TypeDefinition, Value},
 };
 use serde::{Deserialize, Serialize};
 
@@ -46,6 +46,7 @@ pub enum Statement {
         body: Vec<Statement>,
         return_type: Type,
     },
+    TypeDefinition(TypeDefinition),
     ExpressionStatement {
         expression: Expression,
     },
