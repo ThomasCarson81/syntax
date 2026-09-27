@@ -163,6 +163,7 @@ pub struct TypeDefinition {
 pub enum TypeDefinitionKind {
     Struct(StructDefinition),
     Enum(EnumDefinition),
+    BuiltIn(Type),
 }
 
 // the actual struct definition (`struct Point { ... }`)
