@@ -1,4 +1,8 @@
-use crate::{ast::Statement, stdlib::BuiltinId, types::Type};
+use crate::{
+    ast::Statement,
+    stdlib::BuiltinId,
+    types::{Type, TypeTable},
+};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -69,6 +73,7 @@ pub struct FunctionBody {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CheckedProgram {
     pub function_table: FunctionTable,
+    pub type_table: TypeTable,
     pub globals: Vec<Statement>,
     pub main_function_id: FunctionId,
 }
