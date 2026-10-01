@@ -74,6 +74,7 @@ pub enum TokenType {
     Semicolon,
     Colon,
     Comma,
+    Dot,
     EndOfFile,
 }
 impl fmt::Display for TokenType {
@@ -135,7 +136,7 @@ impl fmt::Display for TokenType {
             TokenType::Semicolon => write!(f, "Semicolon"),
             TokenType::Colon => write!(f, "Colon"),
             TokenType::Comma => write!(f, "Comma"),
-
+            TokenType::Dot => write!(f, "Dot"),
             TokenType::EndOfFile => write!(f, "EndOfFile"),
         }
     }
@@ -199,7 +200,7 @@ impl TokenType {
             "Semicolon" => Some(TokenType::Semicolon),
             "Colon" => Some(TokenType::Colon),
             "Comma" => Some(TokenType::Comma),
-
+            "Dot" => Some(TokenType::Dot),
             "EndOfFile" => Some(TokenType::EndOfFile),
 
             _ => None,
