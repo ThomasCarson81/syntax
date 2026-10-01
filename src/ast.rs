@@ -80,4 +80,9 @@ pub enum Expression {
         function_id: FunctionId,
         arguments: Vec<Expression>,
     },
+    FieldAccess {
+        object: Box<Expression>,
+        field: String,
+        inferred_type: Option<Type>,
+    },
 }
